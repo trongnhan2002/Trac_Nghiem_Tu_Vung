@@ -1,0 +1,38 @@
+HƯỚNG DẪN TRIỂN KHAI TÍNH NĂNG "CÀI ĐẶT APP / THÊM VÀO MÀN HÌNH CHÍNH"
+============================================================================
+
+📦 Các file trong thư mục này (PHẢI tải lên TẤT CẢ, cùng một thư mục):
+  1. v24-android.html      — Trang web đã được tích hợp tính năng cài đặt
+  2. manifest.json         — Tệp khai báo ứng dụng (tên, icon, chế độ hiển thị)
+  3. sw.js                 — Service Worker (bắt buộc để Chrome/Android cho phép cài đặt)
+  4. icon-192.png          — Icon ứng dụng 192×192
+  5. icon-512.png          — Icon ứng dụng 512×512 (bắt buộc để cài đặt)
+  6. apple-touch-icon.png  — Icon cho iPhone/iPad khi thêm vào màn hình chính
+
+🚀 Cách triển khai:
+  - Tải toàn bộ 6 file lên host (cùng thư mục), ví dụ: https://domain.com/tuvung/
+  - TRANG WEB PHẢI CHẠY QUA HTTPS (hoặc localhost khi test).
+    Nếu truy cập qua http:// thông thường, trình duyệt sẽ KHÔNG cho cài đặt.
+  - Mở trang bằng Chrome (Android/máy tính) hoặc Edge. Sau ~2,5 giây sẽ hiện
+    banner "Cài đặt ứng dụng" ở dưới màn hình. Nhấn "Cài đặt" để cài như app.
+
+📱 Hành vi theo thiết bị:
+  • Android (Chrome/Edge/Cốc Cốc): hiện banner tự động → nhấn Cài đặt.
+    Sau khi cài, app mở toàn màn hình (không có thanh địa chỉ), có icon trên màn hình.
+  • iPhone/iPad (Safari): hiện banner hướng dẫn "Thêm vào Màn hình chính"
+    (iOS không cho cài tự động, phải làm thủ công qua nút Chia sẻ).
+  • Máy tính (Chrome/Edge): cũng có thể cài đặt như ứng dụng desktop.
+  • Nếu người dùng nhấn "Để sau" hoặc ×, banner tự ẩn trong 7 ngày và hiện
+    lại sau; đồng thời có nút tròn xanh (góc dưới bên phải) để cài đặt bất cứ lúc nào.
+  • Nếu đã cài app rồi (mở ở chế độ standalone), banner sẽ không hiện nữa.
+
+⚠️ Lưu ý quan trọng:
+  - Nếu bạn ĐỔI TÊN file v24-android.html (ví dụ thành index.html), hãy mở
+    manifest.json và sw.js, sửa lại đường dẫn "v24-android.html" thành tên mới.
+  - Nếu chỉ tải lên mỗi file HTML (thiếu manifest.json / sw.js / icon), tính năng
+    cài đặt sẽ KHÔNG hoạt động — nhưng trang web vẫn dùng bình thường.
+  - Khi test trên máy tính本地 (file://), tính năng không hoạt động; phải qua
+    localhost hoặc HTTPS.
+
+Kiểm tra nhanh: sau khi tải lên, mở trang → F12 → tab Application/Manifest
+để xem trình duyệt đã nhận manifest và service worker chưa.
